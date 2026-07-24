@@ -1,0 +1,9 @@
+# Visual Studio cache and hidden folders
+.vs/
+[Bb]in/
+[Oo]bj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
