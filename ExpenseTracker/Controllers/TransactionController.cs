@@ -2,6 +2,7 @@
 using ExpenseTracker.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ExpenseTracker.Controllers
 {
@@ -9,17 +10,17 @@ namespace ExpenseTracker.Controllers
     [ApiController]
     public class TransactionController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
+        private readonly IDbConnection _connection;
 
-        public TransactionController(IConfiguration configuration)
+        public TransactionController(IDbConnection connection)
         {
-            _configuration = configuration;
+            _connection = connection;
         }
 
         [HttpPost("Add")]
         public async Task<IActionResult> AddTransaction(TransactionRequest request)
         {
-            TransactionRepository transaction = new TransactionRepository(_configuration);
+            TransactionRepository transaction = new TransactionRepository(_connection);
 
             long transactionId = await transaction.AddTransaction(request);
 

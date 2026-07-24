@@ -1,4 +1,7 @@
 
+using Npgsql;
+using System.Data;
+
 namespace ExpenseTracker
 {
     public class Program
@@ -6,6 +9,15 @@ namespace ExpenseTracker
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var connectionString = builder.Configuration["DATABASE_URL"] ?? builder.Configuration.GetConnectionString("ExpenseTrackerDefault");
+
+            if(string.IsNullOrEmpty(connectionString) )
+            {
+                throw new InvalidOperationException("Database connection string is not configured.");
+            }
+
+            builder.Services.AddScoped<IDbConnection>(_ => new NpgsqlConnection(connectionString));
 
             // Add services to the container.
 
