@@ -3,16 +3,16 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy project file
-COPY ["ExpenseTracker.csproj", "./"]
+COPY ["ExpenseTracker/ExpenseTracker.csproj", "./"]
 
 # Restore dependencies
-RUN dotnet restore "ExpenseTracker.csproj"
+RUN dotnet restore "ExpenseTracker/ExpenseTracker.csproj"
 
 # Copy all source code
 COPY . .
 
 # Build and publish
-RUN dotnet publish "ExpenseTracker.csproj" \
+RUN dotnet publish "ExpenseTracker/ExpenseTracker.csproj" \
     -c Release \
     -o /app/publish \
     /p:UseAppHost=false
